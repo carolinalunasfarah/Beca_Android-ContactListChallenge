@@ -32,26 +32,44 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView)
         val btnAdd = findViewById<Button>(R.id.addButton)
 
+        // Initialize adapter
+        setRecyclerViewAdapter(contactList)
+
         // Set on click listener for add button
         btnAdd.setOnClickListener {
             val name = etName.text.toString()
             val phone = etPhone.text.toString()
             val isAvailable = cbAvailable.isChecked
 
-            // Validations
-            if(name.isNotEmpty() || phone.isNotEmpty()){
-                textView.text = "Contact added: $name"
-                textView.visibility = TextView.VISIBLE
-            } else if (name.isNotEmpty() || phone.isNotEmpty() || !isAvailable) {
-                textView.text = "All fields are required"
-                textView.visibility = TextView.VISIBLE
-            } else {
-                textView.visibility = TextView.INVISIBLE
-            }
+            // Validations. When > infinite if statements
+            when {
+                name.isEmpty() -> {
+                    textView.text = "Name is required"
+                    textView.visibility = TextView.VISIBLE
+                }
 
-            // Create new contact
-            val newContact = Contact(name, phone, isAvailable)
-            contactList.add(newContact)
+                phone.isEmpty() -> {
+                    textView.text = "Phone number is required"
+                    textView.visibility = TextView.VISIBLE
+                }
+
+                else -> {
+                    textView.text = "Contact added: $name"
+                    textView.visibility = TextView.VISIBLE
+
+                    // Add new contact
+                    val newContact = Contact(name, phone, isAvailable)
+                    contactList.add(newContact)
+
+                    // Update
+                    adapter.updateContacts(contactList)
+
+                    // Clear form
+                    etName.text.clear()
+                    etPhone.text.clear()
+                    cbAvailable.isChecked = false
+                }
+            }
         }
     }
 
