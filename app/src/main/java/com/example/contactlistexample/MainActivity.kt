@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             // Validations
             if(name.isNotEmpty() || phone.isNotEmpty()){
-                textView.text = "Welcome $name"
+                textView.text = "Contact added: $name"
                 textView.visibility = TextView.VISIBLE
             } else if (name.isNotEmpty() || phone.isNotEmpty() || !isAvailable) {
                 textView.text = "All fields are required"
@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 textView.visibility = TextView.INVISIBLE
             }
+
+            // Create new contact
+            val newContact = Contact(name, phone, isAvailable)
+            contactList.add(newContact)
         }
     }
 
