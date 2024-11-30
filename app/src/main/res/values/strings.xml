@@ -5,4 +5,5 @@
     <string name="available">Available</string>
     <string name="add">Add</string>
     <string name="add_contact">Add Contact</string>
+    <string name="filter_availables">Filter availables</string>
 </resources>
