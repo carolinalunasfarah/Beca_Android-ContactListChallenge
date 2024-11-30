@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             val filteredContacts = contactList.filter { it.isAvailable }
             // Update adapter to show filtered contacts
             adapter.updateContacts(filteredContacts)
+            textView.visibility = TextView.INVISIBLE
         }
     }
 
