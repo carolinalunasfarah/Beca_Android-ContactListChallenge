@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
         val btnAdd = findViewById<Button>(R.id.addButton)
+        val btnFilter = findViewById<Button>(R.id.buttonFilter)
 
         // Initialize adapter
         setRecyclerViewAdapter(contactList)
@@ -70,6 +71,13 @@ class MainActivity : AppCompatActivity() {
                     cbAvailable.isChecked = false
                 }
             }
+        }
+
+        btnFilter.setOnClickListener {
+            // Filter contacts
+            val filteredContacts = contactList.filter { it.isAvailable }
+            // Update adapter to show filtered contacts
+            adapter.updateContacts(filteredContacts)
         }
     }
 
