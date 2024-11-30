@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactlistexample.adapter.ContactAdapter
 import com.example.contactlistexample.data.Contact
 import org.w3c.dom.Text
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,13 +64,14 @@ class MainActivity : AppCompatActivity() {
                     val newContact = Contact(name, phone, isAvailable)
                     contactList.add(newContact)
 
-                    // Update
-                    adapter.updateContacts(contactList)
+                    // List copy so it doesn't change the original list
+                    adapter.updateContacts(ArrayList(contactList))
 
                     // Clear form
                     etName.text.clear()
                     etPhone.text.clear()
                     cbAvailable.isChecked = false
+                    hideKeyboard(etName)
                 }
             }
         }
@@ -87,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         adapter = ContactAdapter(contactList)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+    }
+
+    // To avoid focus goes and keyboard appears after adding contact and adding other
+    private fun hideKeyboard(editText: EditText) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 
 }
